@@ -3,7 +3,7 @@ from django.utils import timezone
 
 
 class Vendor(models.Model):
-    store_name = models.CharField(max_length=100)
+    store_name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
         return self.store_name

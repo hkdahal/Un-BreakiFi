@@ -3,21 +3,34 @@ from django.shortcuts import render, HttpResponse
 import csv
 
 from .models import Vendor, Transaction
-import datetime
+
+import dateutil.parser as dtp
 
 
 def index(request):
-    return render(request, 'SystemApp/base.html')
+    transactions = Transaction.objects.all()
+    total = [len(transactions), len(Vendor.objects.all())]
+    return render(request, 'SystemApp/base.html',
+                  context={
+                      'transactions': transactions[:50],
+                      'total': total
+                  })
 
 
 def parse():
-    path = '# path here'
+    path = '/Users/hdahal/Desktop/Projects/Intuit/PlayGround/' \
+           'transaction-data/user-7.csv'
     with open(path) as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             auth_id = row['auth_id']
-            d = [int(i) for i in row[' Date'].split('/')]
-            date = datetime.date(year=d[2], month=d[0], day=d[1])
+
+            try:
+                d = dtp.parse(row[' Date'])
+            except:
+                # print(e)
+                print("FOR: ", row[' Date'])
+
             location = row[' Location ']
 
             vendor_name, transaction_name = parse_vendor(row[' Vendor'])
@@ -28,9 +41,12 @@ def parse():
             else:
                 the_vendor = the_vendor[0]
             amount = row[' Amount']
-            Transaction.objects.create(
-                auth_id=auth_id, date=date, amount=float(amount),
-                location=location, name=transaction_name, vendor=the_vendor)
+            try:
+                Transaction.objects.create(
+                    auth_id=auth_id, date=d, amount=float(amount),
+                    location=location, name=transaction_name, vendor=the_vendor)
+            except ValueError as e:
+                print(e)
 
 
 def parse_vendor(name):

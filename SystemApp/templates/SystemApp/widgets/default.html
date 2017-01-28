@@ -1,0 +1,39 @@
+{% load filters %}
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Auth_ID</th>
+            <th>Date</th>
+            <th>Vendor</th>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Location</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction.auth_id }}</td>
+                <td>{{ transaction.amou }}</td>
+                <td>{{ transaction.vendor }}</td>
+                <td>{{ transaction.name }}</td>
+                <td>{{ transaction.amount }}</td>
+                <td>{{ transaction.location }}</td>
+            </tr>
+        {% endfor %}
+        {% if vendors %}
+            {% for v in vendors %}
+                <tr>
+                    <td>{{ v.store_name }}</td>
+                    <td>{{ amount|item_at:forloop.counter0 }}</td>
+
+
+                </tr>
+            {% endfor %}
+        {% endif %}
+
+        </tbody>
+    </table>
+</div>

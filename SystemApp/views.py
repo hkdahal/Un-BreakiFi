@@ -6,6 +6,8 @@ from .models import Vendor, Transaction
 
 import dateutil.parser as dtp
 
+import copy
+
 
 def index(request):
     transactions = Transaction.objects.all()
@@ -15,6 +17,33 @@ def index(request):
                       'transactions': transactions[:50],
                       'total': total
                   })
+
+
+def vendors(request):
+    v = Vendor.objects.all().order_by('store_name')
+    total = len(v)
+
+    v_expenses = []
+
+    for ven in v:
+        if ven.store_name != 'Paycheck':
+            v_expenses.append((ven, spent_money(ven)))
+
+    sorted_by_expense = sorted(v_expenses, key=lambda x: -x[1][0])[:10]
+    sorted_by_transactions = sorted(v_expenses, key=lambda x: -x[1][1])[:10]
+
+    context = {'total': total, 'expense_vendors': sorted_by_expense,
+               'trans_vendors': sorted_by_transactions}
+    return render(request, 'SystemApp/vendors.html', context)
+
+
+def spent_money(vendor):
+    transactions = Transaction.objects.filter(vendor=vendor)
+    total = 0
+    for t in transactions:
+        if t.is_expense():
+            total += abs(t.amount)
+    return total, len(transactions)
 
 
 def parse():

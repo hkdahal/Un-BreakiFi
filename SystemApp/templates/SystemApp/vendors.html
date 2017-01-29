@@ -38,20 +38,20 @@
         anychart.onDocumentReady(function () {
 
             chart = anychart.pie3d([
-                    {% for v in expense_vendors %}
-                        {name: "{{ v.0 }} ", value: {{ v.1.0 }} },
+                    {% for v in vendors %}
+                        {name: "{{ v.0 }} ", value: {{ v.1 }} },
                     {% endfor %}
             ]);
 
 
             // draw
-            chart.title("Top 10: Vendors vs Expenses");
+            chart.title("{{ title }}");
             chart.container("container");
             chart.draw();
 
             var data = anychart.data.set([
-                    {% for v in expense_vendors %}
-                        ["{{ v.0 }} ", {{ v.1.0 }} ],
+                    {% for v in vendors %}
+                        ["{{ v.0 }} ", {{ v.1 }} ],
                     {% endfor %}
             ]);
 
@@ -59,7 +59,7 @@
             other_chart = anychart.bar3d();
 
             // setting title
-            other_chart.title("Top 10: Vendors vs Expenses");
+            other_chart.title("{{ title }}");
 
             // enabled grids
             other_chart.grid(0).enabled(true);
@@ -69,11 +69,11 @@
             var xAxis = other_chart.xAxis();
             xAxis.title("Vendors");
             var yAxis = other_chart.yAxis();
-            yAxis.title("Money Spent");
+            yAxis.title("Total");
 
             // set data
             var series = other_chart.bar(data);
-            series.name("Total Money Spent");
+            series.name("Total");
 
             // draw chart
             other_chart.container("other_container");

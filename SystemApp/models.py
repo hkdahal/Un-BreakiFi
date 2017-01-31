@@ -2,6 +2,10 @@ from django.db import models
 from django.utils import timezone
 
 
+class Individual(models.Model):
+    auth_id = models.IntegerField()
+
+
 class Vendor(models.Model):
     store_name = models.CharField(max_length=100, unique=True)
 
@@ -10,11 +14,11 @@ class Vendor(models.Model):
 
 
 class Transaction(models.Model):
-    auth_id = models.IntegerField()
+    user = models.ForeignKey(Individual, on_delete=models.CASCADE)
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     date = models.DateField(default=timezone.now)
     amount = models.FloatField()
     location = models.CharField(max_length=10)
-    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
 
     def is_expense(self):
@@ -22,4 +26,4 @@ class Transaction(models.Model):
             return True
 
     def __str__(self):
-        return self.name
+        return self.name + ' ' + str(self.date) + ' ' + str(self.amount)

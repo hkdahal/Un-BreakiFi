@@ -1,0 +1,12 @@
+{% extends 'SystemApp/pages/generic_chart_page.html' %}
+{% load filters %}
+
+{% block body %}
+
+    <div id="my_h_graph"></div>
+
+{% endblock body %}
+
+{% block chart_inclusions %}
+    {% include 'SystemApp/charts/horizontal_graph.html' %}
+{% endblock chart_inclusions %}

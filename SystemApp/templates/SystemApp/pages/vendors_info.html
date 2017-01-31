@@ -1,0 +1,8 @@
+{% extends 'SystemApp/pages/generic_chart_page.html' %}
+{% load filters %}
+
+{% block chart_inclusions %}
+    {% include 'SystemApp/charts/pie_chart.html' %}
+    // set chart type
+    {% include 'SystemApp/charts/horizontal_graph.html' %}
+{% endblock chart_inclusions %}

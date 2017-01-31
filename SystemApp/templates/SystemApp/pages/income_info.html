@@ -1,0 +1,12 @@
+{% extends 'SystemApp/pages/generic_chart_page.html' %}
+{% load filters %}
+
+
+{% block body %}
+    <div id="graph_3v_container"></div>
+{% endblock body %}
+
+
+{% block chart_inclusions %}
+    {% include 'SystemApp/charts/vertical_3v_graph.html' %}
+{% endblock chart_inclusions %}

@@ -1,0 +1,14 @@
+function change_graphic(){
+    var graph = document.getElementById("my_h_graph");
+    var pie = document.getElementById("my_pie_chart");
+    var btn = document.getElementById("my_btn");
+    if (graph.hidden) {
+        graph.hidden = false;
+        pie.hidden = true;
+        btn.textContent = "View in Pie Chart";
+    }else if (pie.hidden){
+        graph.hidden = true;
+        pie.hidden = false;
+        btn.textContent = "View in Graph";
+    }
+};

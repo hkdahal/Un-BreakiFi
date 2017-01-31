@@ -1,0 +1,22 @@
+{% load filters %}
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            {% for title in header %}
+                <th>{{ title }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for i in info %}
+            <tr>
+                {% for item in i %}
+                    <td>{{ item }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

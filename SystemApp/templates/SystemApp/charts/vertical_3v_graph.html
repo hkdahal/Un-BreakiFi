@@ -1,0 +1,39 @@
+{% load filters %}
+
+// data
+        var v_3v_chart_data = anychart.data.set([
+            {% for my_info in the_info %}
+                ["{{ my_info.0 }}", {{ my_info.1 }}, {{ my_info.2 }}],
+            {% endfor %}
+        ]);
+
+        var dataSet1 = v_3v_chart_data.mapAs({x: [0], value: [1]});
+        var dataSet2 = v_3v_chart_data.mapAs({x: [0], value: [2]});
+
+// set chart type
+        chart = anychart.column3d();
+
+// setting title
+        chart.title("{{ title }}");
+
+// enabled grids
+        chart.grid(0).enabled(true);
+        chart.grid(1).enabled(true).layout("horizontal");
+
+// set axes titles
+        var xAxis = chart.xAxis();
+        xAxis.title("{{ X }}");
+        var yAxis = chart.yAxis();
+        yAxis.title("{{ Y }}");
+
+// create series
+        var series1 = chart.column(dataSet1);
+        series1.name("{{ v1_type }}");
+        series1.fill("#228B22");
+        var series2 = chart.column(dataSet2);
+        series2.name("{{ v2_type }}");
+        series2.fill("#B22222");
+
+// draw chart
+        chart.container("graph_3v_container");
+        chart.draw();

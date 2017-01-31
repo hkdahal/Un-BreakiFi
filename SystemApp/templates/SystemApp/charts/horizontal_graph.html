@@ -1,0 +1,30 @@
+var bar_data = anychart.data.set([
+        {% for my_info in the_info %}
+            ["{{ my_info.0 }} ", {{ my_info.1 }} ],
+        {% endfor %}
+]);
+
+// set chart type
+other_chart = anychart.bar3d();
+
+// setting title
+other_chart.title("{{ hg_title }}");
+
+// enabled grids
+other_chart.grid(0).enabled(true);
+other_chart.grid(1).enabled(true).layout("horizontal");
+
+// set axes titles
+var xAxis = other_chart.xAxis();
+xAxis.title("{{ bar_X }}");
+var yAxis = other_chart.yAxis();
+yAxis.title("{{ bar_Y }}");
+
+// set data
+var series = other_chart.bar(bar_data);
+series.name("{{ series_name }}");
+
+// draw chart
+other_chart.container("my_h_graph");
+other_chart.draw();
+

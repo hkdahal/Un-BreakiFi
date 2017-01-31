@@ -1,0 +1,30 @@
+var data1 = anychart.data.set([
+
+{% for my_info in the_info %}
+    ["{{ my_info.0 }}", {{ my_info.1 }}],
+{% endfor %}
+]);
+
+// set chart type
+chart = anychart.area3d();
+
+// setting title
+chart.title("{{ area_title }}");
+
+// enabled grids
+chart.grid(0).enabled(true);
+chart.grid(1).enabled(true).layout("vertical");
+
+// set axes titles
+var xAxis = chart.xAxis();
+xAxis.title("{{ area_X }}");
+var yAxis = chart.yAxis();
+yAxis.title("{{ area_Y }}");
+
+// set data
+var series = chart.area(data1);
+series.name("{{ area_series_name }}");
+
+// draw chart
+chart.container("my_area_chart");
+chart.draw();

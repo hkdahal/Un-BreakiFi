@@ -1,0 +1,11 @@
+chart = anychart.pie3d([
+        {% for my_info in the_info %}
+            {name: "{{ my_info.0 }} ", value: {{ my_info.1 }} },
+        {% endfor %}
+]);
+
+
+// draw
+chart.title("{{ pie_title }}");
+chart.container("my_pie_chart");
+chart.draw();

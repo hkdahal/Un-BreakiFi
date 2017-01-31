@@ -1,0 +1,37 @@
+{% extends 'SystemApp/base.html' %}
+
+{% load filters %}
+
+{% block content %}
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Auth_ID</th>
+                <th>Income-Expense</th>
+                <th>Over Dates</th>
+                <th>Vendors-Expense</th>
+                <th>Vendors-Transactions</th>
+                <th>Transportation</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ user.auth_id }}</td>
+                    <td><a href="/user-{{ user.auth_id }}/income">Income-Expense</a></td>
+                    <td><a href="/user-{{ user.auth_id }}/dates">Over Dates</a></td>
+                    <td><a href="/user-{{ user.auth_id }}/vendors/expense">Vendors-Expense</a></td>
+                    <td><a href="/user-{{ user.auth_id }}/vendors/transactions">Vendors-Transactions</a></td>
+                    <td><a href="/user-{{ user.auth_id }}/transport">Transportation</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

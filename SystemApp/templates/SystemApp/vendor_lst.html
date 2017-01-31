@@ -1,0 +1,30 @@
+{% extends 'SystemApp/base.html' %}
+
+{% load filters %}
+
+{% block content %}
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Vendor</th>
+                <th>Total Expenses</th>
+                <th>Total Transactions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in info %}
+                {% if i.1 %}
+                    <tr>
+                        <td><a href="/user-{{ user_id }}/vendor/{{ i.0.id }}">{{ i.0 }}</a></td>
+                        <td>$ {{ i.1 }}</td>
+                        <td>{{ i.2 }}</td>
+                    </tr>
+                {% endif %}
+
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

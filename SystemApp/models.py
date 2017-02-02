@@ -5,6 +5,9 @@ from django.utils import timezone
 class Individual(models.Model):
     auth_id = models.IntegerField()
 
+    def __str__(self):
+        return 'Individual-{0}'.format(self.auth_id)
+
 
 class Vendor(models.Model):
     store_name = models.CharField(max_length=100, unique=True)

@@ -17,45 +17,59 @@ def parse():
     module_dir = os.path.dirname(__file__)
 
     file_lst = glob.glob(module_dir+'/transaction-data/*.csv')
+    save_to_db(file_lst)
 
+
+def save_to_db(file_lst, uploaded=False):
     i = 0
     l = len(file_lst)
-    print_progress_bar(i, l, prefix='Progress:', suffix='Complete', length=50)
+    users = set()
     for path in file_lst:
-        with open(path) as csvfile:
-            reader = csv.reader(csvfile)
-            next(reader, None)
-            for row in reader:
-                # the_date = None
-                try:
-                    the_date = dtp.parse(row[1])
-                except:
-                    given_date = row[1].split('/')
-                    the_date = dtp.parse(given_date[0]+'/31/'+given_date[2])
-                if the_date:
-                    amount = row[3]
-                    location = row[4]
-                    user = Individual.objects.filter(auth_id=int(row[0]))
-                    if user:
-                        user = user[0]
-                    else:
-                        user = Individual.objects.create(auth_id=int(row[0]))
+        if uploaded:
+            reader = csv.reader(path)
+            user = read_and_save(reader)
+        else:
+            with open(path) as csvfile:
+                reader = csv.reader(csvfile)
+                user = read_and_save(reader)
+        users.add(user)
+        i += 1
+        print_progress_bar(i, l, prefix='Progress:', suffix='Complete',
+                           length=50)
+    return users
 
-                    vendor_name, transaction_name = parse_vendor(row[2])
 
-                    the_vendor = Vendor.objects.filter(store_name=vendor_name)
-                    if not the_vendor:
-                        the_vendor = Vendor.objects.create(store_name=vendor_name)
-                    else:
-                        the_vendor = the_vendor[0]
+def read_and_save(reader):
+    user = None
+    next(reader, None)
+    for row in reader:
+        # the_date = None
+        try:
+            the_date = dtp.parse(row[1])
+        except:
+            given_date = row[1].split('/')
+            the_date = dtp.parse(given_date[0]+'/31/'+given_date[2])
+        if the_date:
+            amount = row[3]
+            location = row[4]
+            user = Individual.objects.filter(auth_id=int(row[0]))
+            if user:
+                user = user[0]
+            else:
+                user = Individual.objects.create(auth_id=int(row[0]))
 
-                    Transaction.objects.create(
-                        user=user, date=the_date, amount=float(amount),
-                        location=location, name=transaction_name, vendor=the_vendor)
-            i += 1
-            # print('Done: ', i, ' out of ', len(file_lst))
-            print_progress_bar(i, l, prefix='Progress:',
-                               suffix='Complete', length=50)
+            vendor_name, transaction_name = parse_vendor(row[2])
+
+            the_vendor = Vendor.objects.filter(store_name=vendor_name)
+            if not the_vendor:
+                the_vendor = Vendor.objects.create(store_name=vendor_name)
+            else:
+                the_vendor = the_vendor[0]
+
+            Transaction.objects.create(
+                user=user, date=the_date, amount=float(amount),
+                location=location, name=transaction_name, vendor=the_vendor)
+    return user.auth_id
 
 
 def parse_vendor(name):

@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^user-(?P<user_id>\d+)/ie', views.monthly_expense_income),
     url(r'^user-(?P<user_id>\d+)/housing', views.housing_expense),
     url(r'^user-(?P<user_id>\d+)/foods', views.restaurant_info),
+    url(r'^add-user', views.add_user),
 
 
 ]

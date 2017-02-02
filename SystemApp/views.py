@@ -4,6 +4,10 @@ from .models import Vendor, Transaction, Individual
 
 import dateutil.parser as dtp
 
+from io import TextIOWrapper
+
+from SystemApp import parse
+
 
 def index(request):
     individuals = Individual.objects.all()
@@ -294,3 +298,24 @@ def housing_expense(request, user_id):
 
     return render(request, 'SystemApp/pages/income_info.html',
                   context=context)
+
+
+def add_user(request):
+    users_added = []
+    if request.method == 'POST':
+        files = request.FILES.getlist('my_files')
+        clean_files = []
+        for file in files:
+            if str(file).endswith('.csv'):
+                f = TextIOWrapper(file.file,
+                                  encoding=request.encoding)
+                clean_files.append(f)
+        print(clean_files)
+        if clean_files:
+            users_added = parse.save_to_db(clean_files, uploaded=True)
+
+    context = {
+        'users_added': users_added
+    }
+    return render(request, 'SystemApp/pages/upload_user.html', context=context)
+

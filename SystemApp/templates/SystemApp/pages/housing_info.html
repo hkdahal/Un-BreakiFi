@@ -1,0 +1,12 @@
+{% extends 'SystemApp/pages/generic_chart_page.html' %}
+{% load filters %}
+
+
+{% block body %}
+    <div id="my_area_chart"></div>
+{% endblock body %}
+
+
+{% block chart_inclusions %}
+    {% include 'SystemApp/charts/graph_chart_with_url.html' %}
+{% endblock chart_inclusions %}

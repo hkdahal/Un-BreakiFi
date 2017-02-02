@@ -10,11 +10,11 @@
 
 {% block body %}
     <div id="my">
-        <button onclick="change_graphic()" id="my_btn">View in graph</button>
+        <button onclick="change_graphic()" id="my_btn">View in Pie Chart</button>
     </div>
 
-    <div id="my_pie_chart"></div>
-    <div id="my_h_graph" hidden></div>
+    <div id="my_pie_chart" hidden></div>
+    <div id="my_h_graph"></div>
 
     <script>
         {% include 'SystemApp/charts/change_chart.html' %}

@@ -17,8 +17,8 @@
         <div class="container-fluid">
         <div class="row">
             {% include 'SystemApp/widgets/display.html' %}
-            <h2 class="sub-header">Total Users: {{ total }}</h2>
             {% block content %}
+                <h2 class="sub-header">Total Users: {{ total }}</h2>
                 {% include 'SystemApp/widgets/default.html' %}
             {% endblock %}
 

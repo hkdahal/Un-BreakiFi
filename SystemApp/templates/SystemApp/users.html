@@ -16,15 +16,14 @@
                 <th>Vendors-Transactions</th>
                 <th>Transportation</th>
 
-
             </tr>
             </thead>
             <tbody>
             {% for user in users %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                    <td>{{ user.auth_id }}</td>
-                    <td><a href="/user-{{ user.auth_id }}/income">Income-Expense</a></td>
+                    <td><a href="/user-{{ user.auth_id }}/profile">{{ user.auth_id }}</a></td>
+                    <td><a href="/user-{{ user.auth_id }}/ie">Income-Expense</a></td>
                     <td><a href="/user-{{ user.auth_id }}/dates">Over Dates</a></td>
                     <td><a href="/user-{{ user.auth_id }}/vendors/expense">Vendors-Expense</a></td>
                     <td><a href="/user-{{ user.auth_id }}/vendors/transactions">Vendors-Transactions</a></td>

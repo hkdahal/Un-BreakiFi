@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render
 
 from .models import Vendor, Transaction, Individual
 
@@ -83,28 +83,30 @@ def provide_vendors(user_id, per_expense=True, transactions=None):
 
 
 def vendors_vs_expense(request, user_id):
-    v = provide_vendors(user_id)[:20]
+    v = provide_vendors(user_id)[:30]
     context = {
         'the_info': v,
         'pie_title': "Top 20: Vendors vs Expense",
         'hg_title': "Top 20: Vendors vs Expense",
         'bar_X': "Vendor",
         'bar_Y': "Expense",
-        'series_name': "Expense Total ($)"
+        'series_name': "Expense Total ($)",
+        'height_size': 130
 
     }
     return render(request, 'SystemApp/pages/vendors_info.html', context)
 
 
 def vendors_vs_transactions(request, user_id):
-    v = provide_vendors(user_id, per_expense=False)[:20]
+    v = provide_vendors(user_id, per_expense=False)[:30]
     context = {
         'the_info': v,
         'pie_title': "Top 20: Vendors vs Num Transaction",
         'hg_title': "Top 20: Vendors vs Num Transaction",
         'bar_X': "Vendor",
         'bar_Y': "Num of Transactions",
-        'series_name': "Transaction Total"
+        'series_name': "Transaction Total",
+        'height_size': 130
 
     }
     return render(request, 'SystemApp/pages/vendors_info.html', context)
@@ -125,8 +127,8 @@ def transportation(request, user_id):
         'hg_title': "Transportation vs Expense",
         'bar_X': "Transportation Means",
         'bar_Y': "Spent Money",
-        'series_name': "Total Spent ($)"
-
+        'series_name': "Total Spent ($)",
+        'height_size': 98
 
     }
     return render(request, 'SystemApp/pages/transport_info.html', context)
@@ -157,19 +159,35 @@ def spent_money(user_id, vendor=None, per_expense=True, transactions=None):
         return len(transactions)
 
 
-def restaurant_info(user_id):
+def restaurant_info(request, user_id):
     transactions = Transaction.objects.filter(vendor__store_name='Restaurant',
                                               user__auth_id=int(user_id))
-    lst = []
+    dct = {}
     for t in transactions:
-        if t.name not in lst:
-            lst.append(t.name)
-    return lst
+        if t.name not in dct:
+            dct[t.name] = abs(t.amount)
+        else:
+            dct[t.name] += abs(t.amount)
+    data = []
+    for item in dct:
+        data.append((item, dct[item]))
+    context = {
+        'the_info': data,
+        'hg_title': "Transportation vs Expense",
+        'bar_X': "Transportation Means",
+        'bar_Y': "Spent Money",
+        'series_name': "Total Spent ($)",
+        'height_size': 98
+
+    }
+    return render(request, 'SystemApp/pages/transport_info.html', context)
 
 
 def per_date(request, user_id):
     start = dtp.parse('1/1/2013')
     end = dtp.parse('3/10/2013')
+
+    monthly_expense_income(request, user_id)
 
     if request.method == 'POST':
         given = request.POST['subject']
@@ -181,12 +199,16 @@ def per_date(request, user_id):
     t = Transaction.objects.filter(date__gte=start, date__lt=end,
                                    user__auth_id=int(user_id))
 
-    context = {'title': "Top 10: Vendors vs Expense",
+    data = per_days(t, user_id)
+    context = {'area_title': "Top 10: Vendors vs Expense",
                "start": str(start.date()), "end": str(end.date()),
-               "the_info": per_days(t, user_id),
-               "user_id": user_id
+               "the_info": data,
+               "user_id": user_id,
+               "area_X": 'Selected Dates',
+               "area_Y": 'Total Expense',
+               "area_series_name": 'Total Expense'
                }
-    return render(request, 'SystemApp/pages/date_info.html', context)
+    return render(request, 'SystemApp/pages/good_date_info.html', context)
 
 
 def per_days(transactions, user_id):
@@ -197,8 +219,78 @@ def per_days(transactions, user_id):
             days[t.date] = None
             ts = transactions.filter(date=t.date, user__auth_id=int(user_id))
             days_expense_transactions.append(
-                (t.date, len(ts), spent_money(user_id, transactions=ts)))
+                (t.date, spent_money(user_id, transactions=ts)))
     return days_expense_transactions
 
 
+def day_specific_transactions(request, user_id, d):
 
+    if 'monthly' in d:
+        d = d[len('monthly'):]
+        d = dtp.parse(d)
+        the_date = d.strftime("%B %Y")
+        ts = Transaction.objects.filter(user__auth_id=user_id, date__month=d.month, date__year=d.year)
+    else:
+        the_date = dtp.parse(d)
+        ts = Transaction.objects.filter(user__auth_id=user_id, date=the_date)
+
+    return render(request, 'SystemApp/base.html',
+                  context={
+                      'transactions': ts[:100],
+                      'total': 'For {0} on {1}'.format(user_id, the_date)
+                  })
+
+
+def monthly_expense_income(request, user_id):
+    monthly_income_expense = []
+
+    years = ['2013', '2014']
+    for year in years:
+        for month in range(1, 13):
+            total_income = 0
+            total_expense = 0
+            the_ts = Transaction.objects.filter(user__auth_id=user_id, date__month=month, date__year=year)
+            for t in the_ts:
+                if t.is_expense():
+                    total_expense += abs(t.amount)
+                else:
+                    total_income += t.amount
+            if the_ts:
+                d = the_ts[0].date
+                monthly_income_expense.append((d.strftime('%B %Y'), total_income, total_expense, d))
+
+    context = {
+        'the_info': monthly_income_expense,
+        'title': "Monthly Income and Expenditure",
+        'X': "Months",
+        'Y': "Income & Expenses",
+        'v1_type': "Income ($)",
+        'v2_type': "Expense ($)",
+        'user_id': user_id
+
+    }
+
+    return render(request, 'SystemApp/pages/income_info.html',
+                  context=context)
+
+
+def housing_expense(request, user_id):
+    housing_transactions = Transaction.objects.filter(user__auth_id=user_id, name__contains='Housing Rent')
+    payments = []
+
+    for t in housing_transactions:
+        payments.append((t.date, abs(t.amount)))
+
+    context = {
+        'the_info': payments,
+        'title': "Monthly Housing Payments",
+        'X': "Date of Payment",
+        'Y': "Amount",
+        'v1_type': "Paid($)",
+        'v2_type': "Expense ($)",
+        'user_id': user_id
+
+    }
+
+    return render(request, 'SystemApp/pages/income_info.html',
+                  context=context)

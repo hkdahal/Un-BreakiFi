@@ -1,7 +1,7 @@
 var data1 = anychart.data.set([
 
 {% for my_info in the_info %}
-    ["{{ my_info.0 }}", {{ my_info.1 }}],
+    ["{{ my_info.0 }}", {{ my_info.1 }}, "www.google.com"],
 {% endfor %}
 ]);
 

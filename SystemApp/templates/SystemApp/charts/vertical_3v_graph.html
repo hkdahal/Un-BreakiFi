@@ -3,12 +3,12 @@
 // data
         var v_3v_chart_data = anychart.data.set([
             {% for my_info in the_info %}
-                ["{{ my_info.0 }}", {{ my_info.1 }}, {{ my_info.2 }}],
+                ["{{ my_info.0 }}", {{ my_info.1 }}, {{ my_info.2 }}, "/user-{{ user_id }}/activities/monthly-{{ my_info.3 }}"],
             {% endfor %}
         ]);
 
-        var dataSet1 = v_3v_chart_data.mapAs({x: [0], value: [1]});
-        var dataSet2 = v_3v_chart_data.mapAs({x: [0], value: [2]});
+        var dataSet1 = v_3v_chart_data.mapAs({x: [0], value: [1], url: [3]});
+        var dataSet2 = v_3v_chart_data.mapAs({x: [0], value: [2], url: [3]});
 
 // set chart type
         chart = anychart.column3d();
@@ -23,8 +23,10 @@
 // set axes titles
         var xAxis = chart.xAxis();
         xAxis.title("{{ X }}");
+        xAxis.labels().rotation(270);
         var yAxis = chart.yAxis();
         yAxis.title("{{ Y }}");
+
 
 // create series
         var series1 = chart.column(dataSet1);
@@ -37,3 +39,10 @@
 // draw chart
         chart.container("graph_3v_container");
         chart.draw();
+
+
+// add a listener
+chart.listen("pointClick", function(e){
+    var new_value = e.point.get("url");
+    window.open(new_value,"_self");
+});

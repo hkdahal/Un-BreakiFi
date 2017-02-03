@@ -1,4 +1,6 @@
 {% extends 'SystemApp/base.html' %}
+{% load filters %}
+{% load staticfiles %}
 
 {% block body %}
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -6,22 +8,107 @@
             Auth_id: {{ Auth_id }}
             <br>Total Expense so far: {{ total_expense }}
             <br>Total money you have made so far: {{ total_income }}
-            <br>Your financial status: {% if status < 0 %} <span style="color: red">Debt $ {{ status }}</span>{% else %} <span style="color: green">Has $ {{ status }}</span>{% endif %}
+            <br>Your financial status: {% if status < 0 %}
+            <span style="color: red">Debt $ {{ status }}</span>{% else %}
+            <span style="color: green">Has $ {{ status }}</span>{% endif %}
             <br>Total Housing Expense: {{ total_housing }}
             <br>Monthly housing:
 
             <br>
             <br>Based on transactions:
-            <br>has kid? is student? out of school? is geek?
-            <br>is outgoing?
-            <br>has pet?
-            <br>Getting married soon?
-            <br>Orders online a lot?
-            <br>{{ msg }}
-            <br>
-            <br>Based on restaurant:
-            <br>Regular foods? Fast foods? Fancy?
 
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>Features of </strong> <em>Individual
+                    - {{ Auth_id }}</em>
+                </div>
+                <div class="panel-body">
+
+                    <div class="icon-grid">
+                        {% for feature in features %}
+                            <style>
+                                #my_img{
+                                    width: 128px;
+                                    height: 128px;
+                                }
+                            </style>
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+
+                                {% if feature == 'student' and features|item_at:feature %}
+                                    <img src={% static feature|image_name %} id="my_img">
+                                    <pre>is a <strong>student</strong>.</pre>
+
+                                {% endif %}
+
+                                {% if feature == 'has_kids' and features|item_at:feature %}
+                                   <img src={% static feature|image_name %} id="my_img">
+                                    <pre>Has kids.</pre>
+                                {% endif %}
+
+                                {% if feature == 'student_loan' and features|item_at:feature %}
+                                   <img src={% static feature|image_name %} id="my_img">
+                                    <pre>Paying student loans ${{ features|item_at:feature  }} </pre>
+
+                                {% endif %}
+
+                                {% if feature == 'pets' and features|item_at:feature %}
+                                    <img src={% static feature|image_name %} id="my_img">
+                                    <pre>Has pets.</pre>
+                                {% endif %}
+
+                                {% if feature == 'an_artist' and features|item_at:feature  %}
+                                    <img src={% static feature|image_name %} id="my_img">
+                                    <pre>An artist or into arts.</pre>
+                                {% endif %}
+
+                                {% if feature == 'moved' and features|item_at:feature  %}
+                                    <img src={% static feature|image_name %} id="my_img">
+                                    <pre>Recently moved.</pre>
+                                {% endif %}
+
+                                {% if feature == 'peaceful' and features|item_at:feature  %}
+                                    <img src={% static feature|image_name %} id="my_img">
+                                    <pre>Peace and Learn.</pre>
+                                {% endif %}
+
+                                {% if feature == 'purposing' and features|item_at:feature  %}
+                                    <img src={% static feature|image_name %} id="my_img">
+                                    <pre>Is planning on purposing.</pre>
+
+                                {% endif %}
+
+                                {% if feature == 'athletic' and features|item_at:feature  %}
+                                    <img src={% static feature|image_name %} id="my_img">
+                                    <pre>Is an athletic person.</pre>
+
+                                {% endif %}
+
+                                {% if feature == 'divorced' and features|item_at:feature  %}
+                                    <img src={% static feature|image_name %} id="my_img">
+                                    <pre>Recently divorced.</pre>
+
+                                {% endif %}
+
+                                {% if feature == 'outgoing' and features|item_at:feature  %}
+                                    <img src={% static feature|image_name %} id="my_img">
+                                    <pre>Is outgoing.</pre>
+
+                                {% endif %}
+
+                                {% if feature == 'figurine_stuffs' and features|item_at:feature  %}
+                                    <img src={% static feature|image_name %} id="my_img">
+                                    <pre>Is into figurine stuffs.</pre>
+
+                                {% endif %}
+
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
         </p>

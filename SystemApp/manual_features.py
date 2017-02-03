@@ -10,51 +10,33 @@ def provide_profile(request, user_id):
     total_expense, total_income, total_housing = total_expense_and_income(user)
     financial_status = total_income - abs(total_expense)
 
-    msg = ''
-
-    if has_kids(user_id):
-        msg += 'This guy has kids.\n'
-
-    student_loan = has_been_paying_student_loans(user_id)
-    if student_loan:
-        msg += 'Has been paying student loan.So far: ${0}'.format(student_loan)
-
-    if has_pets(user_id):
-        msg += 'This guy has pets!!!'
-
-    if is_student(user_id):
-        msg += 'This guy is a STUDENT!!'
-
-    if is_an_artist(user_id):
-        msg += 'This guy is either into art or is an ARTIST!!'
-
-    if is_into_music(user_id):
-        msg += 'This guy is into MUSIC!!'
-
-    if is_into_stuffs(user_id):
-        msg += 'This guy is into Figurine stuffs!!'
-
-    if is_moving(user_id):
-        msg += 'This guy is moved or relocated recently!!'
-
-    if likes_peace(user_id):
-        msg += 'This guy likes peace and to learn!!'
-
-    if is_purposing(user_id):
-        msg += 'This guy is planning to get MARRIED... purposing?!!'
-
-    if is_athletic(user_id):
-        msg += 'This guy is into SPORTS and/or is an athletic person!!'
-
     context = {
         'Auth_id': user_id,
         'total_expense': total_expense,
         'total_income': total_income,
         'status': financial_status,
         'total_housing': total_housing,
-        'msg': msg
+        'features': tell_features(user_id)
     }
     return render(request, 'SystemApp/pages/profile.html', context=context)
+
+
+def tell_features(user_id):
+    the_features = dict()
+    the_features['student'] = is_student(user_id)
+    the_features['has_kids'] = has_kids(user_id)
+    the_features['student_loan'] = has_been_paying_student_loans(
+        user_id)
+    the_features['pets'] = has_pets(user_id)
+    the_features['an_artist'] = is_an_artist(user_id)
+    the_features['moved'] = is_moving(user_id)
+    the_features['peaceful'] = likes_peace(user_id)
+    the_features['purposing'] = is_purposing(user_id)
+    the_features['athletic'] = is_athletic(user_id)
+    the_features['divorced'] = is_divorced(user_id)
+    the_features['outgoing'] = is_outgoing(user_id)
+    the_features['figurine_stuffs'] = is_into_stuffs(user_id)
+    return the_features
 
 
 def total_expense_and_income(user):

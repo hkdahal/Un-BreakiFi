@@ -32,13 +32,13 @@ def provide_profile(request, user_id):
         msg += 'This guy is into MUSIC!!'
 
     if is_into_stuffs(user_id):
-        msg += 'This guy is into Figurine stuffs, and probably a nerd!!'
+        msg += 'This guy is into Figurine stuffs!!'
 
     if is_moving(user_id):
         msg += 'This guy is moved or relocated recently!!'
 
     if likes_peace(user_id):
-        msg += 'This guy likes peace and to read!!'
+        msg += 'This guy likes peace and to learn!!'
 
     if is_purposing(user_id):
         msg += 'This guy is planning to get MARRIED... purposing?!!'
@@ -104,7 +104,7 @@ def is_student(user_id):
             Q(name__contains='Mathematics Book') |
             Q(name__contains='Biology Book')
         )
-    )
+    ).filter(~Q(name__contains='Museum')) # getting rid of 'Art Museum'
     return bool(student_related_transactions)
 
 
@@ -123,7 +123,8 @@ def is_into_music(user_id):
     music_related_transactions = Transaction.objects.filter(
         Q(user__auth_id=user_id) & (
             Q(name__contains='Guitar') |
-            Q(name__contains='Music')
+            Q(name__contains='Music') |
+            Q(name__contains='Piano')
         )
     )
     return bool(music_related_transactions)
@@ -154,7 +155,8 @@ def likes_peace(user_id):
     peace_related_transactions = Transaction.objects.filter(
         Q(user__auth_id=user_id) & (
             Q(name__contains='Library') |
-            Q(name__contains='Book Store')
+            Q(name__contains='Book Store') |
+            Q(name__contains='Museum')
         )
     )
     return bool(peace_related_transactions)
@@ -174,7 +176,7 @@ def is_purposing(user_id):
 def is_athletic(user_id):
     athlete_related_transactions = Transaction.objects.filter(
         Q(user__auth_id=user_id) & (
-            Q(name__contains='Dick') |
+            Q(name__contains="Dick's") |
             Q(name__contains='Sports') |
             Q(name__contains='NFL') |
             Q(name__contains='NBA') |
@@ -186,3 +188,26 @@ def is_athletic(user_id):
         )
     )
     return bool(athlete_related_transactions)
+
+
+def is_divorced(user_id):
+    return bool(Transaction.objects.filter(user__auth_id=user_id, name__contains='Divorce Lawyer'))
+
+
+def is_outgoing(user_id):
+    cool_places_transactions = Transaction.objects.filter(
+        Q(user__auth_id=user_id) & (
+            Q(name__contains='Bar') |
+            Q(name__contains='Beach') |
+            Q(name__contains='Bowling') |
+            Q(name__contains='Skating') |
+            Q(name__contains='Night Club') |
+            Q(name__contains='Theater') |
+            Q(name__contains='Concert') |
+            Q(name__contains='Wine')
+
+        )
+    )
+    return bool(cool_places_transactions)
+
+

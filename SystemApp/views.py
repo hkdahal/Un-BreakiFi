@@ -6,7 +6,7 @@ import dateutil.parser as dtp
 
 from io import TextIOWrapper
 
-from SystemApp import parse
+import interact as parse
 
 
 def index(request):

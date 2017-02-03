@@ -1,27 +1,29 @@
 {% extends 'SystemApp/base.html' %}
 
-{% block content %}
-    <p>
-        Auth_id: {{ Auth_id }}
-        <br>Total Expense so far: {{ total_expense }}
-        <br>Total money you have made so far: {{ total_income }}
-        <br>Your financial status: {% if status < 0 %} <span style="color: red">Debt $ {{ status }}</span>{% else %} <span style="color: green">Has $ {{ status }}</span>{% endif %}
-        <br>Total Housing Expense: {{ total_housing }}
-        <br>Monthly housing:
+{% block body %}
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <p>
+            Auth_id: {{ Auth_id }}
+            <br>Total Expense so far: {{ total_expense }}
+            <br>Total money you have made so far: {{ total_income }}
+            <br>Your financial status: {% if status < 0 %} <span style="color: red">Debt $ {{ status }}</span>{% else %} <span style="color: green">Has $ {{ status }}</span>{% endif %}
+            <br>Total Housing Expense: {{ total_housing }}
+            <br>Monthly housing:
 
-        <br>
-        <br>Based on transactions:
-        <br>has kid? is student? out of school? is geek?
-        <br>is outgoing?
-        <br>has pet?
-        <br>Getting married soon?
-        <br>Orders online a lot?
-        <br>{{ msg }}
-        <br>
-        <br>Based on restaurant:
-        <br>Regular foods? Fast foods? Fancy?
+            <br>
+            <br>Based on transactions:
+            <br>has kid? is student? out of school? is geek?
+            <br>is outgoing?
+            <br>has pet?
+            <br>Getting married soon?
+            <br>Orders online a lot?
+            <br>{{ msg }}
+            <br>
+            <br>Based on restaurant:
+            <br>Regular foods? Fast foods? Fancy?
 
 
 
-    </p>
+        </p>
+    </div>
 {% endblock %}

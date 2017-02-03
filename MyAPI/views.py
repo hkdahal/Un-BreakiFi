@@ -5,6 +5,12 @@ from SystemApp import models
 from . import serializers
 
 
-class ListCreateUser(generics.ListCreateAPIView):
+class ListUser(generics.ListAPIView):
+    queryset = models.Individual.objects.all()
+    serializer_class = serializers.UserSerializer
+
+
+class RetrieveUpdateDestroyUser(generics.RetrieveUpdateDestroyAPIView):
+    lookup_field = 'auth_id'
     queryset = models.Individual.objects.all()
     serializer_class = serializers.UserSerializer

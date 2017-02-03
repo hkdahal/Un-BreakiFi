@@ -26,44 +26,49 @@ API Calls:
 
 General urls:
 1. add user (upload csv files)
-
-
+```
     localhost:8000/add-user
-
+```
 2. profile 
-    
-    
+```
     localhost:8000/user-<auth_id>/profile
+```
 3. income vs transaction details
 
-
+```
     localhost:8000/user-<auth_id>/ie
+```
 4. housing expenses
-
-
+```
     localhost:8000/user-<auth_id>/housing
+```
+    
 5. transactions over time
-
-
+```
     localhost:8000/user-<auth_id>/dates
+```
 6. transportation related details
 
-
+```
     localhost:8000/user-<auth_id>/transport
+```
 7. vendors
 
-
+```
     localhost:8000/user-<auth_id>/vendors
+```
 8. vendor specific transactions
     
-    
+```    
     localhost:8000/user-<auth_id>/<vendor_id>
+```
 9. vendors vs expense
 
-
+```
     localhost:8000/user-624/vendors/expense
+```
 10. vendors vs number of transactions
 
-
+```
     localhost:8000/user-<auth_id>/vendors/transactions
-
+```

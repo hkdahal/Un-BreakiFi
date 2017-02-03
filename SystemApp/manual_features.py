@@ -11,6 +11,7 @@ def provide_profile(request, user_id):
     financial_status = total_income - abs(total_expense)
 
     context = {
+        'page_title': 'Profile',
         'Auth_id': user_id,
         'total_expense': total_expense,
         'total_income': total_income,

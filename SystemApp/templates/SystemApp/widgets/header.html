@@ -10,7 +10,12 @@
 <link rel="icon"
       href="http://www.freeiconspng.com/uploads/pin-financial-reports-icon-on-pinterest-28.png">
 
-<title>Un-BreakiFi</title>
+<title>
+    {% block page_title %}
+        {{ page_title }}
+    {% endblock %}
+    | Un-BreakiFi
+</title>
 
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet"

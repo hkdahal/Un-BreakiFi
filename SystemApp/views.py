@@ -14,6 +14,7 @@ def index(request):
     total = len(individuals)
     return render(request, 'SystemApp/users.html',
                   context={
+                      'page_title': 'Home',
                       'users': individuals,
                       'total': total
                   })
@@ -27,7 +28,10 @@ def vendor_lst(request, user_id):
         amount = spent_money(user_id, transactions=ts)
         result.append((i, amount, len(ts)))
     return render(request, 'SystemApp/vendor_lst.html',
-                  context={'info': result, 'user_id': user_id})
+                  context={
+                      'info': result, 'user_id': user_id,
+                      'page_title': 'Vendors',
+                  })
 
 
 def vendor_transactions(request, user_id, vendor_id):
@@ -36,6 +40,7 @@ def vendor_transactions(request, user_id, vendor_id):
                                               user__auth_id=int(user_id))
     return render(request, 'SystemApp/base.html',
                   context={
+                      'page_title': 'Transactions',
                       'transactions': transactions[:100],
                       'total': 'For ' + str(vendor)
                   })
@@ -54,6 +59,7 @@ def income_vs_expense(request, user_id):
         result.append((d.strftime('%B %Y'), t.amount, amount))
 
     context = {
+        'page_title': 'Income and Expense',
         'the_info': result,
         'title': "Monthly Income and Expenditure",
         'X': "Months",
@@ -89,6 +95,7 @@ def provide_vendors(user_id, per_expense=True, transactions=None):
 def vendors_vs_expense(request, user_id):
     v = provide_vendors(user_id)[:30]
     context = {
+        'page_title': 'Expenses',
         'the_info': v,
         'pie_title': "Top 20: Vendors vs Expense",
         'hg_title': "Top 20: Vendors vs Expense",
@@ -104,6 +111,7 @@ def vendors_vs_expense(request, user_id):
 def vendors_vs_transactions(request, user_id):
     v = provide_vendors(user_id, per_expense=False)[:30]
     context = {
+        'page_title': 'Transactions',
         'the_info': v,
         'pie_title': "Top 20: Vendors vs Num Transaction",
         'hg_title': "Top 20: Vendors vs Num Transaction",
@@ -127,6 +135,7 @@ def transportation(request, user_id):
             ts.append((v, spent_money(user_id, transactions=t)))
 
     context = {
+        'page_title': 'Transportation',
         'the_info': ts,
         'hg_title': "Transportation vs Expense",
         'bar_X': "Transportation Means",
@@ -176,6 +185,7 @@ def restaurant_info(request, user_id):
     for item in dct:
         data.append((item, dct[item]))
     context = {
+        'page_title': 'Restaurants',
         'the_info': data,
         'hg_title': "Transportation vs Expense",
         'bar_X': "Transportation Means",
@@ -204,14 +214,16 @@ def per_date(request, user_id):
                                    user__auth_id=int(user_id))
 
     data = per_days(t, user_id)
-    context = {'area_title': "Top 10: Vendors vs Expense",
-               "start": str(start.date()), "end": str(end.date()),
-               "the_info": data,
-               "user_id": user_id,
-               "area_X": 'Selected Dates',
-               "area_Y": 'Total Expense',
-               "area_series_name": 'Total Expense'
-               }
+    context = {
+        'page_title': 'Over Time',
+        'area_title': "Top 10: Vendors vs Expense",
+        "start": str(start.date()), "end": str(end.date()),
+        "the_info": data,
+        "user_id": user_id,
+        "area_X": 'Selected Dates',
+        "area_Y": 'Total Expense',
+        "area_series_name": 'Total Expense'
+    }
     return render(request, 'SystemApp/pages/good_date_info.html', context)
 
 
@@ -240,6 +252,7 @@ def day_specific_transactions(request, user_id, d):
 
     return render(request, 'SystemApp/base.html',
                   context={
+                      'page_title': 'Transactions',
                       'transactions': ts[:100],
                       'total': 'For {0} on {1}'.format(user_id, the_date)
                   })
@@ -264,6 +277,7 @@ def monthly_expense_income(request, user_id):
                 monthly_income_expense.append((d.strftime('%B %Y'), total_income, total_expense, d))
 
     context = {
+        'page_title': 'Monthly Income and Expense',
         'the_info': monthly_income_expense,
         'title': "Monthly Income and Expenditure",
         'X': "Months",
@@ -286,6 +300,7 @@ def housing_expense(request, user_id):
         payments.append((t.date, abs(t.amount)))
 
     context = {
+        'page_title': 'Housing Rent',
         'the_info': payments,
         'title': "Monthly Housing Payments",
         'X': "Date of Payment",
@@ -313,8 +328,11 @@ def add_user(request):
         print(clean_files)
         if clean_files:
             users_added = parse.save_to_db(clean_files, uploaded=True)
-
+    page_title = 'Add User'
+    if users_added:
+        page_title = 'Added users'
     context = {
+        'page_title': page_title,
         'users_added': users_added
     }
     return render(request, 'SystemApp/pages/upload_user.html', context=context)

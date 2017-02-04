@@ -83,3 +83,18 @@ vendors vs number of transactions
 ```
     localhost:8000/user-<auth_id>/vendors/transactions
 ```
+
+Determined the features based on following:<br />
+     Student - Transactions related to books such as Science, Mathematics, Biology  <br />
+     Artist or into arts - Transactions related to art, paint, craft <br />
+     Into music - Transactions related to Guitar, Music, Piano <br />
+     Figurine stuffs - Transactions related to Figurines <br />
+     Recently moved - Transactions related to Depot, Furniture, Movers <br />
+     Likes peace - Transactions related to Library, Book Store, Museum <br />
+     Proposing - Transactions related to Wedding Planners, Jewelry shopping <br />
+     Athletic - Transactions related to Dick's Sports, Sports, NFl, NBA, Athletic events, Vitamin shopping, Biking, Gym <br />
+     Divorced - Transactions related to Divorced Lawyer Fees <br />
+     Outgoing - Transactions related to Bar, Beach, Bowling, Skating, Theater, Concert, Wine <br />
+     Has Kids - Transactions related to babies <br />
+     Paying Student Loans - Transactions related to Student Loans <br />
+     Pets - Transactions related to pet supplies <br />

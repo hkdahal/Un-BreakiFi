@@ -1,20 +1,30 @@
 <div class="col-sm-3 col-md-2 sidebar">
+
     <ul class="nav nav-sidebar">
-        <li class="active"><a href="/">Overview <span
+        <li {% if current == 'Overview' %} class="active" {% endif %}><a href="/">Overview <span
                 class="sr-only">(current)</span></a></li>
-        <li><a href="/user-624/vendors/expense">Vendors vs Expense</a></li>
-        <li><a href="/user-624/vendors/transactions">Vendors vs Transactions</a></li>
-        <li><a href="#">Statistics</a></li>
-        <li><a href="#">Export</a></li>
+
+        <li {% if current == 'ANU' %} class="active" {% endif %}><a href="/add-user">Add New Users</a></li>
+        <li {% if current == 'API Reference' %} class="active" {% endif %}><a href="/api-guide">API Reference</a></li>
+        <li {% if current == 'Profile' %} class="active" {% endif %}><a href="/user-624/profile">Profile</a></li>
     </ul>
+
     <ul class="nav nav-sidebar">
-        <li><a href="">Graphical</a></li>
-        <li><a href="/user-624/dates">By Date</a></li>
-        <li><a href="/user-624/income">Income-Expense</a></li>
+        <li {% if current == 'ToT' %} class="active" {% endif %}><a href="/user-624/dates">Transactions over Time</a></li>
+        <li {% if current == 'MIE' %} class="active" {% endif %}><a href="/user-624/ie">Monthly Income and Expenses</a></li>
+        <li {% if current == 'Vendors' %} class="active" {% endif %}><a href="/user-624/vendors">Vendors</a></li>
+        <li {% if current == 'VE' %} class="active" {% endif %}><a href="/user-624/vendors/expense">Vendors vs Expense</a></li>
+        <li {% if current == 'VT' %} class="active" {% endif %}><a href="/user-624/vendors/transactions">Vendors vs Transactions</a></li>
     </ul>
+
     <ul class="nav nav-sidebar">
-        <li><a href="">API Reference</a></li>
-        <li><a href="">README</a></li>
-        <li><a href="">About me</a></li>
+        <li {% if current == 'HE' %} class="active" {% endif %}><a href="/user-624/housing">Housing Expenses</a></li>
+        <li {% if current == 'RE' %} class="active" {% endif %}><a href="/user-624/foods">Restaurants Expenses</a></li>
+        <li {% if current == 'TE' %} class="active" {% endif %}><a href="/user-624/transport">Transportation Expenses</a></li>
+    </ul>
+
+    <ul class="nav nav-sidebar">
+        <li {% if current == 'README' %} class="active" {% endif %}><a href="">README</a></li>
+        <li {% if current == 'About me' %} class="active" {% endif %}><a href="">About me</a></li>
     </ul>
 </div>

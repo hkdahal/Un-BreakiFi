@@ -17,7 +17,8 @@ def provide_profile(request, user_id):
         'total_income': total_income,
         'status': financial_status,
         'total_housing': total_housing,
-        'features': tell_features(user_id)
+        'features': tell_features(user_id),
+        'current': 'Profile'
     }
     return render(request, 'SystemApp/pages/profile.html', context=context)
 

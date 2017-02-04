@@ -16,7 +16,8 @@ def index(request):
                   context={
                       'page_title': 'Home',
                       'users': individuals,
-                      'total': total
+                      'total': total,
+                      'current': 'Overview',
                   })
 
 
@@ -31,6 +32,7 @@ def vendor_lst(request, user_id):
                   context={
                       'info': result, 'user_id': user_id,
                       'page_title': 'Vendors',
+                      'current': 'Vendors',
                   })
 
 
@@ -42,35 +44,9 @@ def vendor_transactions(request, user_id, vendor_id):
                   context={
                       'page_title': 'Transactions',
                       'transactions': transactions[:100],
-                      'total': 'For ' + str(vendor)
+                      'total': 'For ' + str(vendor),
+                      'current': 'Vendors'
                   })
-
-
-def income_vs_expense(request, user_id):
-    incomes = Transaction.objects.filter(
-        amount__gt=0, user__auth_id=int(user_id))  # positive transactions
-    # dates = [t.date for t in incomes]
-    result = []
-    for t in incomes:
-        d = t.date
-        ts = Transaction.objects.filter(
-            date__month=d.month, date__year=d.year, user__auth_id=int(user_id))
-        amount = spent_money(user_id, transactions=ts)
-        result.append((d.strftime('%B %Y'), t.amount, amount))
-
-    context = {
-        'page_title': 'Income and Expense',
-        'the_info': result,
-        'title': "Monthly Income and Expenditure",
-        'X': "Months",
-        'Y': "Income & Expenses",
-        'v1_type': "Income ($)",
-        'v2_type': "Expense ($)"
-
-    }
-
-    return render(request, 'SystemApp/pages/income_info.html',
-                  context=context)
 
 
 def provide_vendors(user_id, per_expense=True, transactions=None):
@@ -102,7 +78,8 @@ def vendors_vs_expense(request, user_id):
         'bar_X': "Vendor",
         'bar_Y': "Expense",
         'series_name': "Expense Total ($)",
-        'height_size': 130
+        'height_size': 130,
+        'current': 'VE',
 
     }
     return render(request, 'SystemApp/pages/vendors_info.html', context)
@@ -118,7 +95,8 @@ def vendors_vs_transactions(request, user_id):
         'bar_X': "Vendor",
         'bar_Y': "Num of Transactions",
         'series_name': "Transaction Total",
-        'height_size': 130
+        'height_size': 130,
+        'current': 'VT',
 
     }
     return render(request, 'SystemApp/pages/vendors_info.html', context)
@@ -141,7 +119,8 @@ def transportation(request, user_id):
         'bar_X': "Transportation Means",
         'bar_Y': "Spent Money",
         'series_name': "Total Spent ($)",
-        'height_size': 98
+        'height_size': 98,
+        'current': 'TE',
 
     }
     return render(request, 'SystemApp/pages/transport_info.html', context)
@@ -191,7 +170,8 @@ def restaurant_info(request, user_id):
         'bar_X': "Transportation Means",
         'bar_Y': "Spent Money",
         'series_name': "Total Spent ($)",
-        'height_size': 98
+        'height_size': 98,
+        'current': 'RE',
 
     }
     return render(request, 'SystemApp/pages/transport_info.html', context)
@@ -222,7 +202,8 @@ def per_date(request, user_id):
         "user_id": user_id,
         "area_X": 'Selected Dates',
         "area_Y": 'Total Expense',
-        "area_series_name": 'Total Expense'
+        "area_series_name": 'Total Expense',
+        'current': 'ToT',
     }
     return render(request, 'SystemApp/pages/good_date_info.html', context)
 
@@ -254,7 +235,8 @@ def day_specific_transactions(request, user_id, d):
                   context={
                       'page_title': 'Transactions',
                       'transactions': ts[:100],
-                      'total': 'For {0} on {1}'.format(user_id, the_date)
+                      'total': 'For {0} on {1}'.format(user_id, the_date),
+                      'current': 'ToT'
                   })
 
 
@@ -284,7 +266,8 @@ def monthly_expense_income(request, user_id):
         'Y': "Income & Expenses",
         'v1_type': "Income ($)",
         'v2_type': "Expense ($)",
-        'user_id': user_id
+        'user_id': user_id,
+        'current': 'MIE',
 
     }
 
@@ -307,7 +290,8 @@ def housing_expense(request, user_id):
         'Y': "Amount",
         'v1_type': "Paid($)",
         'v2_type': "Expense ($)",
-        'user_id': user_id
+        'user_id': user_id,
+        'current': 'HE',
 
     }
 
@@ -333,7 +317,8 @@ def add_user(request):
         page_title = 'Added users'
     context = {
         'page_title': page_title,
-        'users_added': users_added
+        'users_added': users_added,
+        'current': 'ANU',
     }
     return render(request, 'SystemApp/pages/upload_user.html', context=context)
 

@@ -4,6 +4,8 @@
 
 {% block body %}
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h3>Details of Individual-{{ Auth_id }}</h3>
+
         <p>
             Auth_id: {{ Auth_id }}
             <br>Total Expense so far: {{ total_expense }}
@@ -13,13 +15,17 @@
             <span style="color: green">Has $ {{ status }}</span>{% endif %}
             <br>Total Housing Expense: {{ total_housing }}
 
-            <br>
-            <br>Based on transactions:
-
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <strong>Features of </strong> <em>Individual
+                    <strong>Change Individual: <select name="my_select_form" onchange="location = this.value;">
+            {% for u in all_users %}
+                <option value="/user-{{ u.auth_id }}/profile" {% if u.auth_id == Auth_id %} selected {% endif %}>
+                    {{ u }}
+                </option>
+            {% endfor %}
+
+        </select><br>Based on transactions, features of </strong> <em>Individual
                     - {{ Auth_id }}</em>
                 </div>
                 <div class="panel-body">
@@ -32,76 +38,99 @@
                                     height: 128px;
                                 }
                             </style>
-                            <div class="col-lg-3 col-md-4 col-sm-6">
+
 
                                 {% if feature == 'student' and features|item_at:feature %}
-                                    <img src={% static feature|image_name %} id="my_img">
-                                    <pre>is a <strong>student</strong>.</pre>
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <img src={% static feature|image_name %} id="my_img">
+                                        <pre>is a <strong>student</strong>.</pre>
+                                    </div>
 
                                 {% endif %}
 
                                 {% if feature == 'has_kids' and features|item_at:feature %}
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
                                    <img src={% static feature|image_name %} id="my_img">
                                     <pre>Has kids.</pre>
+                                    </div>
                                 {% endif %}
 
                                 {% if feature == 'student_loan' and features|item_at:feature %}
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
                                    <img src={% static feature|image_name %} id="my_img">
                                     <pre>Paying student loans ${{ features|item_at:feature  }} </pre>
+                                    </div>
 
                                 {% endif %}
 
                                 {% if feature == 'pets' and features|item_at:feature %}
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
                                     <img src={% static feature|image_name %} id="my_img">
                                     <pre>Has pets.</pre>
+                                    </div>
                                 {% endif %}
 
                                 {% if feature == 'an_artist' and features|item_at:feature  %}
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
                                     <img src={% static feature|image_name %} id="my_img">
                                     <pre>An artist or into arts.</pre>
+                                    </div>
                                 {% endif %}
 
                                 {% if feature == 'moved' and features|item_at:feature  %}
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
                                     <img src={% static feature|image_name %} id="my_img">
                                     <pre>Recently moved.</pre>
+                                    </div>
                                 {% endif %}
 
                                 {% if feature == 'peaceful' and features|item_at:feature  %}
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
                                     <img src={% static feature|image_name %} id="my_img">
                                     <pre>Peace and Learn.</pre>
+                                    </div>
                                 {% endif %}
 
-                                {% if feature == 'purposing' and features|item_at:feature  %}
+                                {% if feature == 'proposing' and features|item_at:feature  %}
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
                                     <img src={% static feature|image_name %} id="my_img">
                                     <pre>Is planning on purposing.</pre>
+                                    </div>
 
                                 {% endif %}
 
                                 {% if feature == 'athletic' and features|item_at:feature  %}
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
                                     <img src={% static feature|image_name %} id="my_img">
                                     <pre>Is an athletic person.</pre>
+                                    </div>
 
                                 {% endif %}
 
                                 {% if feature == 'divorced' and features|item_at:feature  %}
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
                                     <img src={% static feature|image_name %} id="my_img">
                                     <pre>Recently divorced.</pre>
+                                    </div>
 
                                 {% endif %}
 
                                 {% if feature == 'outgoing' and features|item_at:feature  %}
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
                                     <img src={% static feature|image_name %} id="my_img">
                                     <pre>Is outgoing.</pre>
+                                    </div>
 
                                 {% endif %}
 
                                 {% if feature == 'figurine_stuffs' and features|item_at:feature  %}
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
                                     <img src={% static feature|image_name %} id="my_img">
                                     <pre>Is into figurine stuffs.</pre>
+                                    </div>
 
                                 {% endif %}
 
-                            </div>
                         {% endfor %}
 
                     </div>

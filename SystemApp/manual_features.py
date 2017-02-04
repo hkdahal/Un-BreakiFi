@@ -12,13 +12,14 @@ def provide_profile(request, user_id):
 
     context = {
         'page_title': 'Profile',
-        'Auth_id': user_id,
+        'Auth_id': int(user_id),
         'total_expense': total_expense,
         'total_income': total_income,
         'status': financial_status,
         'total_housing': total_housing,
         'features': tell_features(user_id),
-        'current': 'Profile'
+        'current': 'Profile',
+        'all_users': Individual.objects.all()
     }
     return render(request, 'SystemApp/pages/profile.html', context=context)
 
@@ -33,7 +34,7 @@ def tell_features(user_id):
     the_features['an_artist'] = is_an_artist(user_id)
     the_features['moved'] = is_moving(user_id)
     the_features['peaceful'] = likes_peace(user_id)
-    the_features['purposing'] = is_purposing(user_id)
+    the_features['proposing'] = is_proposing(user_id)
     the_features['athletic'] = is_athletic(user_id)
     the_features['divorced'] = is_divorced(user_id)
     the_features['outgoing'] = is_outgoing(user_id)
@@ -57,7 +58,9 @@ def total_expense_and_income(user):
 
 def has_kids(user_id):
     kids_related_transactions = Transaction.objects.filter(
-        Q(user__auth_id=user_id) & (Q(name__contains='Baby') | Q(name__contains='babies'))
+        Q(user__auth_id=user_id) & (
+            Q(name__contains='Baby') | Q(name__contains='babies')
+        )
     )
     return bool(kids_related_transactions)
 
@@ -146,7 +149,7 @@ def likes_peace(user_id):
     return bool(peace_related_transactions)
 
 
-def is_purposing(user_id):
+def is_proposing(user_id):
     wedding_related_transactions = Transaction.objects.filter(
         Q(user__auth_id=user_id) & (
             Q(name__contains='Wedding') |
@@ -175,7 +178,8 @@ def is_athletic(user_id):
 
 
 def is_divorced(user_id):
-    return bool(Transaction.objects.filter(user__auth_id=user_id, name__contains='Divorce Lawyer'))
+    return bool(Transaction.objects.filter(user__auth_id=user_id,
+                                           name__contains='Divorce Lawyer'))
 
 
 def is_outgoing(user_id):

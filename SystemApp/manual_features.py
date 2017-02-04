@@ -92,7 +92,7 @@ def is_student(user_id):
             Q(name__contains='Mathematics Book') |
             Q(name__contains='Biology Book')
         )
-    ).filter(~Q(name__contains='Museum')) # getting rid of 'Art Museum'
+    )
     return bool(student_related_transactions)
 
 
@@ -103,7 +103,7 @@ def is_an_artist(user_id):
             Q(name__contains='Paint') |
             Q(name__contains='Craft')
         )
-    )
+    ).filter(~Q(name__contains='Museum'))  # getting rid of 'Art Museum'
     return bool(art_related_transactions)
 
 

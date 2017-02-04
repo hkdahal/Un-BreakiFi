@@ -1,0 +1,86 @@
+{% extends 'SystemApp/base.html' %}
+
+{% block content_without_display %}
+    <p>Developed using python 3.5 and following packages: </p>
+    <ul style="list-style-type:circle">
+        <li>django==1.9.1</li>
+        <li>djangorestframework==3.5.3</li>
+        <li>pygments==2.2.0</li>
+        <li>python-dateutil==2.6.0</li>
+    </ul>
+
+    <p>Install requirements:</p>
+
+    <pre><code> pip install -r requirements.txt
+</code></pre>
+
+    <p>Run the server:</p>
+
+    <pre><code>python manage.py runserver
+</code></pre>
+
+    <p>Then go to: localhost:8000</p>
+
+    <p>Load data via CLI:</p>
+
+    <pre><code>python interact.py --parse   # load data
+python interact.py --delete  # delete all from the db
+</code></pre>
+
+    <p>API Calls:</p>
+
+    <pre><code>localhost:8000/api/v1/users           # see all users and their features
+localhost:8000/api/v1/user-&lt;auth_id&gt;/ # specific user's features
+</code></pre>
+
+    <p>General urls:
+        add user (upload csv files)</p>
+
+    <pre><code>    localhost:8000/add-user
+</code></pre>
+
+    <p>profile with features</p>
+
+    <pre><code>    localhost:8000/user-&lt;auth_id&gt;/profile
+</code></pre>
+
+    <p>income vs transaction details</p>
+
+    <pre><code>    localhost:8000/user-&lt;auth_id&gt;/ie
+</code></pre>
+
+    <p>housing expenses</p>
+
+    <pre><code>    localhost:8000/user-&lt;auth_id&gt;/housing
+</code></pre>
+
+    <p>transactions over time</p>
+
+    <pre><code>    localhost:8000/user-&lt;auth_id&gt;/dates
+</code></pre>
+
+    <p>transportation related details</p>
+
+    <pre><code>    localhost:8000/user-&lt;auth_id&gt;/transport
+</code></pre>
+
+    <p>vendors</p>
+
+    <pre><code>    localhost:8000/user-&lt;auth_id&gt;/vendors
+</code></pre>
+
+    <p>vendor specific transactions</p>
+
+    <pre><code>    localhost:8000/user-&lt;auth_id&gt;/&lt;vendor_id&gt;
+</code></pre>
+
+    <p>vendors vs expense</p>
+
+    <pre><code>    localhost:8000/user-624/vendors/expense
+</code></pre>
+
+    <p>vendors vs number of transactions</p>
+
+    <pre><code>    localhost:8000/user-&lt;auth_id&gt;/vendors/transactions
+</code></pre>
+{% endblock %}

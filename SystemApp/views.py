@@ -177,8 +177,8 @@ def restaurant_info(request, user_id):
     context = {
         'page_title': 'Restaurants',
         'the_info': data,
-        'hg_title': "Transportation vs Expense",
-        'bar_X': "Transportation Means",
+        'hg_title': "Restaurant vs Expense",
+        'bar_X': "Food Types",
         'bar_Y': "Spent Money",
         'series_name': "Total Spent ($)",
         'height_size': 98,
@@ -349,4 +349,15 @@ def add_user(request):
 
 
 def api_guide(request):
-    return render(request, 'SystemApp/pages/api_guide.html', context={})
+    context = {'current': 'API'}
+    return render(request, 'SystemApp/pages/api_guide.html', context=context)
+
+
+def read_me(request):
+    context = {'current': 'README'}
+    return render(request, 'SystemApp/pages/instruction.html', context=context)
+
+
+def about_me(request):
+    context = {'current': 'About me'}
+    return render(request, 'SystemApp/pages/about_me.html', context=context)

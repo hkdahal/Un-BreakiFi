@@ -8,7 +8,11 @@
 
 
 {% block change_user %}
+
     {% include 'SystemApp/widgets/change_user.html' %}
+    {% if current != 'HE' and current != 'RE' %}
+        <br>You can click on each bar below to see more details.
+    {% endif %}
 {% endblock %}
 
 {% block body %}

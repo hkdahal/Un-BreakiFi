@@ -19,6 +19,9 @@ urlpatterns = [
     url(r'^user-(?P<user_id>\d+)/foods', views.restaurant_info),
     url(r'^add-user', views.add_user),
     url(r'^api-guide', views.api_guide),
+    url(r'^readme', views.read_me),
+    url(r'^about-me', views.about_me),
+
 
 
 

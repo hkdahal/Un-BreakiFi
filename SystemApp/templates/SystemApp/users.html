@@ -10,11 +10,13 @@
             <tr>
                 <th>#</th>
                 <th>Auth_ID</th>
-                <th>Income-Expense</th>
+                <th>Profile</th>
                 <th>Over Dates</th>
+                <th>Income-Expense</th>
+                <th>Vendors</th>
                 <th>Vendors-Expense</th>
                 <th>Vendors-Transactions</th>
-                <th>Transportation</th>
+                <th>Housing Rent</th>
 
             </tr>
             </thead>
@@ -23,11 +25,13 @@
                 <tr>
                     <td>{{ forloop.counter }}</td>
                     <td><a href="/user-{{ user.auth_id }}/profile">{{ user.auth_id }}</a></td>
-                    <td><a href="/user-{{ user.auth_id }}/ie">Income-Expense</a></td>
-                    <td><a href="/user-{{ user.auth_id }}/dates">Over Dates</a></td>
+                    <td><a href="/user-{{ user.auth_id }}/profile">Profile</a></td>
+                    <td><a href="/user-{{ user.auth_id }}/dates">Select Date</a></td>
+                    <td><a href="/user-{{ user.auth_id }}/ie">Income and Expense</a></td>
+                    <td><a href="/user-{{ user.auth_id }}/vendors">See Vendors</a></td>
                     <td><a href="/user-{{ user.auth_id }}/vendors/expense">Vendors-Expense</a></td>
                     <td><a href="/user-{{ user.auth_id }}/vendors/transactions">Vendors-Transactions</a></td>
-                    <td><a href="/user-{{ user.auth_id }}/transport">Transportation</a></td>
+                    <td><a href="/user-{{ user.auth_id }}/housing">Rent</a></td>
                 </tr>
             {% endfor %}
             </tbody>

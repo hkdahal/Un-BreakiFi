@@ -1,10 +1,14 @@
 {% extends 'SystemApp/base.html' %}
 
 {% load filters %}
-
+{% block change_user %}
+    <h3>Vendors associated with Individual-{{ user_id }}</h3>
+    {% include 'SystemApp/widgets/change_user.html' %}
+{% endblock %}
 {% block content_without_display %}
 
     <div class="table-responsive">
+
         <table class="table table-striped">
             <thead>
             <tr>

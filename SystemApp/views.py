@@ -31,9 +31,11 @@ def vendor_lst(request, user_id):
         result.append((i, amount, len(ts)))
     return render(request, 'SystemApp/vendor_lst.html',
                   context={
-                      'info': result, 'user_id': user_id,
+                      'info': result,
+                      'user_id': int(user_id),
                       'page_title': 'Vendors',
                       'current': 'Vendors',
+                      'current_url': 'vendors',
                   })
 
 
@@ -46,7 +48,9 @@ def vendor_transactions(request, user_id, vendor_id):
                       'page_title': 'Transactions',
                       'transactions': transactions[:100],
                       'total': 'For ' + str(vendor),
-                      'current': 'Vendors'
+                      'current': 'Vendors',
+                      'user_id': int(user_id),
+                      'current_url': 'vendor/'+str(vendor_id)
                   })
 
 
@@ -81,7 +85,8 @@ def vendors_vs_expense(request, user_id):
         'series_name': "Expense Total ($)",
         'height_size': 130,
         'current': 'VE',
-        'user_id': user_id
+        'user_id': int(user_id),
+        'current_url': 'vendors/expense'
 
     }
     return render(request, 'SystemApp/pages/vendors_info.html', context)
@@ -99,7 +104,8 @@ def vendors_vs_transactions(request, user_id):
         'series_name': "Transaction Total",
         'height_size': 130,
         'current': 'VT',
-        'user_id': user_id
+        'user_id': int(user_id),
+        'current_url': 'vendors/transactions'
 
     }
     return render(request, 'SystemApp/pages/vendors_info.html', context)
@@ -124,6 +130,8 @@ def transportation(request, user_id):
         'series_name': "Total Spent ($)",
         'height_size': 98,
         'current': 'TE',
+        'user_id': int(user_id),
+        'current_url': 'transport'
 
     }
     return render(request, 'SystemApp/pages/transport_info.html', context)
@@ -175,6 +183,8 @@ def restaurant_info(request, user_id):
         'series_name': "Total Spent ($)",
         'height_size': 98,
         'current': 'RE',
+        'current_url': 'foods',
+        'user_id': int(user_id)
 
     }
     return render(request, 'SystemApp/pages/transport_info.html', context)
@@ -182,7 +192,7 @@ def restaurant_info(request, user_id):
 
 def per_date(request, user_id):
     start = dtp.parse('1/1/2013')
-    end = dtp.parse('3/10/2013')
+    end = dtp.parse('2/10/2013')
 
     monthly_expense_income(request, user_id)
 
@@ -208,6 +218,8 @@ def per_date(request, user_id):
         "area_Y": 'Total Expense',
         "area_series_name": 'Total Expense',
         'current': 'ToT',
+        'current_url': 'dates',
+        'user_id': int(user_id)
     }
     return render(request, 'SystemApp/pages/good_date_info.html', context)
 
@@ -243,7 +255,9 @@ def day_specific_transactions(request, user_id, d):
                       'total': 'For {0} on {1}'.format(user_id,
                                                        the_date
                                                        ),
-                      'current': 'ToT'
+                      'current': 'ToT',
+                      'user_id': int(user_id),
+
                   })
 
 
@@ -275,8 +289,9 @@ def monthly_expense_income(request, user_id):
         'Y': "Income & Expenses",
         'v1_type': "Income ($)",
         'v2_type': "Expense ($)",
-        'user_id': user_id,
+        'user_id': int(user_id),
         'current': 'MIE',
+        'current_url': 'ie',
 
     }
 
@@ -300,8 +315,9 @@ def housing_expense(request, user_id):
         'Y': "Amount",
         'v1_type': "Paid($)",
         'v2_type': "Expense ($)",
-        'user_id': user_id,
+        'user_id': int(user_id),
         'current': 'HE',
+        'current_url': 'housing'
 
     }
 

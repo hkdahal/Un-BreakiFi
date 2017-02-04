@@ -1,0 +1,14 @@
+{% load filters %}
+
+<strong>
+    Change Individual:
+    <select name="my_select_form"
+            onchange="location = this.value;">
+        {% for u in 'here'|provide_all_users %}
+            <option value="/user-{{ u.auth_id }}/{{ current_url }}"
+                    {% if u.auth_id == user_id %} selected {% endif %}>
+                {{ u }}
+            </option>
+        {% endfor %}
+    </select>
+</strong>

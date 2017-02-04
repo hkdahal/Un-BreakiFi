@@ -13,15 +13,24 @@
 {% include 'SystemApp/widgets/nav_bar.html' %}
 {% include 'SystemApp/widgets/side_bar.html' %}
 
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+{% block change_user %}
+{% endblock %}
+</div>
+
 {% block body %}
     <div class="container-fluid">
     <div class="row">
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
             {% block content_without_display %}
-                {% include 'SystemApp/widgets/display.html' %}
+                {% if display %}
+                    {% include 'SystemApp/widgets/display.html' %}
+                {% endif %}
                 {% block content %}
-                    <h2 class="sub-header">Total Users: {{ total }}</h2>
+                    {% include 'SystemApp/widgets/change_user.html' %}
+                    <h2 class="sub-header">{{ total }}</h2>
+
                     {% include 'SystemApp/widgets/default.html' %}
                 {% endblock %}
             {% endblock %}

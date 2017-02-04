@@ -12,14 +12,15 @@ def provide_profile(request, user_id):
 
     context = {
         'page_title': 'Profile',
-        'Auth_id': int(user_id),
+        'Auth_id': user_id,
         'total_expense': total_expense,
         'total_income': total_income,
         'status': financial_status,
         'total_housing': total_housing,
         'features': tell_features(user_id),
         'current': 'Profile',
-        'all_users': Individual.objects.all()
+        'user_id': int(user_id),
+        'current_url': 'profile'
     }
     return render(request, 'SystemApp/pages/profile.html', context=context)
 

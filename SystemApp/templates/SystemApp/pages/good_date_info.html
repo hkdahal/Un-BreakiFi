@@ -27,13 +27,12 @@
         <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
         <span></span> <b class="caret"></b>
     </div>
-    <br>
     <form action="/user-{{ user_id }}/dates" method="post" id="the_form">
         {% csrf_token %}
         <input id="id_subject" type="text" name="subject" maxlength="500" hidden/>
         <input type="submit" value="Submit" class="btn btn-success"/>
     </form>
-
+    {% include 'SystemApp/widgets/change_user.html' %}
 
 </div>
 

@@ -1,0 +1,20 @@
+{% extends 'SystemApp/base.html' %}
+
+{% block content_without_display %}
+    <h1>API Usage Guide</h1>
+    <p>API Calls:</p>
+    <pre>
+        <code>
+            <a href="/api/v1/users">/api/v1/users</a>           # see all users and their features
+            <a href="/api/v1/user-624">/api/v1/user-&lt;auth_id&gt;/</a> # specific user's features
+        </code>
+    </pre>
+
+    <h3>Get Json:</h3> just add <code> ?format=json </code><br><br>
+    <pre>
+        <code>
+            <a href="/api/v1/users?format=json">/api/v1/users?format=json</a>           # see all users and their features
+            <a href="/api/v1/user-624?format=json">/api/v1/user-&lt;auth_id&gt;?format=json</a> # specific user's features
+        </code>
+    </pre>
+{% endblock %}

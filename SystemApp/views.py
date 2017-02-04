@@ -347,3 +347,6 @@ def add_user(request):
     }
     return render(request, 'SystemApp/pages/upload_user.html', context=context)
 
+
+def api_guide(request):
+    return render(request, 'SystemApp/pages/api_guide.html', context={})

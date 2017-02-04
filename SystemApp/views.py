@@ -18,6 +18,7 @@ def index(request):
                       'users': individuals,
                       'total': total,
                       'current': 'Overview',
+                      'display': True
                   })
 
 
@@ -80,6 +81,7 @@ def vendors_vs_expense(request, user_id):
         'series_name': "Expense Total ($)",
         'height_size': 130,
         'current': 'VE',
+        'user_id': user_id
 
     }
     return render(request, 'SystemApp/pages/vendors_info.html', context)
@@ -97,6 +99,7 @@ def vendors_vs_transactions(request, user_id):
         'series_name': "Transaction Total",
         'height_size': 130,
         'current': 'VT',
+        'user_id': user_id
 
     }
     return render(request, 'SystemApp/pages/vendors_info.html', context)
@@ -196,7 +199,8 @@ def per_date(request, user_id):
     data = per_days(t, user_id)
     context = {
         'page_title': 'Over Time',
-        'area_title': "Top 10: Vendors vs Expense",
+        'area_title': "Activities over {0} and {1}".format(start.date(),
+                                                           end.date()),
         "start": str(start.date()), "end": str(end.date()),
         "the_info": data,
         "user_id": user_id,
@@ -226,7 +230,8 @@ def day_specific_transactions(request, user_id, d):
         d = d[len('monthly'):]
         d = dtp.parse(d)
         the_date = d.strftime("%B %Y")
-        ts = Transaction.objects.filter(user__auth_id=user_id, date__month=d.month, date__year=d.year)
+        ts = Transaction.objects.filter(
+            user__auth_id=user_id, date__month=d.month, date__year=d.year)
     else:
         the_date = dtp.parse(d)
         ts = Transaction.objects.filter(user__auth_id=user_id, date=the_date)
@@ -235,7 +240,9 @@ def day_specific_transactions(request, user_id, d):
                   context={
                       'page_title': 'Transactions',
                       'transactions': ts[:100],
-                      'total': 'For {0} on {1}'.format(user_id, the_date),
+                      'total': 'For {0} on {1}'.format(user_id,
+                                                       the_date
+                                                       ),
                       'current': 'ToT'
                   })
 
@@ -248,7 +255,8 @@ def monthly_expense_income(request, user_id):
         for month in range(1, 13):
             total_income = 0
             total_expense = 0
-            the_ts = Transaction.objects.filter(user__auth_id=user_id, date__month=month, date__year=year)
+            the_ts = Transaction.objects.filter(
+                user__auth_id=user_id, date__month=month, date__year=year)
             for t in the_ts:
                 if t.is_expense():
                     total_expense += abs(t.amount)
@@ -256,7 +264,8 @@ def monthly_expense_income(request, user_id):
                     total_income += t.amount
             if the_ts:
                 d = the_ts[0].date
-                monthly_income_expense.append((d.strftime('%B %Y'), total_income, total_expense, d))
+                monthly_income_expense.append((d.strftime('%B %Y'),
+                                               total_income, total_expense, d))
 
     context = {
         'page_title': 'Monthly Income and Expense',
@@ -276,7 +285,8 @@ def monthly_expense_income(request, user_id):
 
 
 def housing_expense(request, user_id):
-    housing_transactions = Transaction.objects.filter(user__auth_id=user_id, name__contains='Housing Rent')
+    housing_transactions = Transaction.objects.filter(
+        user__auth_id=user_id, name__contains='Housing Rent')
     payments = []
 
     for t in housing_transactions:
@@ -309,7 +319,6 @@ def add_user(request):
                 f = TextIOWrapper(file.file,
                                   encoding=request.encoding)
                 clean_files.append(f)
-        print(clean_files)
         if clean_files:
             users_added = parse.save_to_db(clean_files, uploaded=True)
     page_title = 'Add User'

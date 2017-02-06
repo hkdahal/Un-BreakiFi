@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from django.db.models import Q
 
-from .models import Transaction, Individual
+from .models import Transaction, Individual, Features
 
 
 def provide_profile(request, user_id):
@@ -17,7 +17,7 @@ def provide_profile(request, user_id):
         'total_income': total_income,
         'status': financial_status,
         'total_housing': total_housing,
-        'features': tell_features(user_id),
+        'feature': tell_features(user_id),
         'current': 'Profile',
         'user_id': int(user_id),
         'current_url': 'profile'
@@ -26,21 +26,22 @@ def provide_profile(request, user_id):
 
 
 def tell_features(user_id):
-    the_features = dict()
-    the_features['student'] = is_student(user_id)
-    the_features['has_kids'] = has_kids(user_id)
-    the_features['student_loan'] = has_been_paying_student_loans(
-        user_id)
-    the_features['pets'] = has_pets(user_id)
-    the_features['an_artist'] = is_an_artist(user_id)
-    the_features['moved'] = is_moving(user_id)
-    the_features['peaceful'] = likes_peace(user_id)
-    the_features['proposing'] = is_proposing(user_id)
-    the_features['athletic'] = is_athletic(user_id)
-    the_features['divorced'] = is_divorced(user_id)
-    the_features['outgoing'] = is_outgoing(user_id)
-    the_features['figurine_stuffs'] = is_into_stuffs(user_id)
-    return the_features
+    # the_features = dict()
+    # the_features['student'] = is_student(user_id)
+    # the_features['has_kids'] = has_kids(user_id)
+    # the_features['student_loan'] = has_been_paying_student_loans(
+    #     user_id)
+    # the_features['pets'] = has_pets(user_id)
+    # the_features['an_artist'] = is_an_artist(user_id)
+    # the_features['moved'] = is_moving(user_id)
+    # the_features['peaceful'] = likes_peace(user_id)
+    # the_features['proposing'] = is_proposing(user_id)
+    # the_features['athletic'] = is_athletic(user_id)
+    # the_features['divorced'] = is_divorced(user_id)
+    # the_features['outgoing'] = is_outgoing(user_id)
+    # the_features['figurine_stuffs'] = is_into_stuffs(user_id)
+    the_features = Features.objects.filter(user__auth_id=user_id)
+    return the_features[0]
 
 
 def total_expense_and_income(user):

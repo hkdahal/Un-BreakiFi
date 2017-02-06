@@ -26,8 +26,7 @@
                 <div class="panel-body">
 
                     <div class="icon-grid">
-                        {% for feature in features %}
-                            <style>
+                        <style>
                                 #my_img{
                                     width: 128px;
                                     height: 128px;
@@ -35,98 +34,95 @@
                             </style>
 
 
-                                {% if feature == 'student' and features|item_at:feature %}
+                                {% if feature.student%}
                                     <div class="col-lg-3 col-md-4 col-sm-6">
-                                        <img src={% static feature|image_name %} id="my_img">
+                                        <img src={% static 'student'|image_name %} id="my_img">
                                         <pre>is a <strong>student</strong>.</pre>
                                     </div>
 
                                 {% endif %}
 
-                                {% if feature == 'has_kids' and features|item_at:feature %}
+                                {% if feature.has_kids%}
                                     <div class="col-lg-3 col-md-4 col-sm-6">
-                                   <img src={% static feature|image_name %} id="my_img">
+                                   <img src={% static 'has_kids'|image_name %} id="my_img">
                                     <pre>Has kids.</pre>
                                     </div>
                                 {% endif %}
 
-                                {% if feature == 'student_loan' and features|item_at:feature %}
+                                {% if feature.student_loan %}
                                     <div class="col-lg-3 col-md-4 col-sm-6">
-                                   <img src={% static feature|image_name %} id="my_img">
-                                    <pre>Paying student loans ${{ features|item_at:feature  }} </pre>
+                                   <img src={% static 'student_loan'|image_name %} id="my_img">
+                                    <pre>Paying student loans ${{ feature.student_loan  }} </pre>
                                     </div>
 
                                 {% endif %}
 
-                                {% if feature == 'pets' and features|item_at:feature %}
+                                {% if feature.pets %}
                                     <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <img src={% static feature|image_name %} id="my_img">
+                                    <img src={% static 'pets'|image_name %} id="my_img">
                                     <pre>Has pets.</pre>
                                     </div>
                                 {% endif %}
 
-                                {% if feature == 'an_artist' and features|item_at:feature  %}
+                                {% if feature.an_artist%}
                                     <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <img src={% static feature|image_name %} id="my_img">
+                                    <img src={% static 'an_artist'|image_name %} id="my_img">
                                     <pre>An artist or into arts.</pre>
                                     </div>
                                 {% endif %}
 
-                                {% if feature == 'moved' and features|item_at:feature  %}
+                                {% if feature.moved%}
                                     <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <img src={% static feature|image_name %} id="my_img">
+                                    <img src={% static 'moved'|image_name %} id="my_img">
                                     <pre>Recently moved.</pre>
                                     </div>
                                 {% endif %}
 
-                                {% if feature == 'peaceful' and features|item_at:feature  %}
+                                {% if feature.peaceful %}
                                     <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <img src={% static feature|image_name %} id="my_img">
+                                    <img src={% static 'peaceful'|image_name %} id="my_img">
                                     <pre>Peace and Learn.</pre>
                                     </div>
                                 {% endif %}
 
-                                {% if feature == 'proposing' and features|item_at:feature  %}
+                                {% if feature.proposing%}
                                     <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <img src={% static feature|image_name %} id="my_img">
-                                    <pre>Is planning on purposing.</pre>
+                                    <img src={% static 'proposing'|image_name %} id="my_img">
+                                    <pre>Is planning on proposing.</pre>
                                     </div>
 
                                 {% endif %}
 
-                                {% if feature == 'athletic' and features|item_at:feature  %}
+                                {% if feature.athletic%}
                                     <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <img src={% static feature|image_name %} id="my_img">
+                                    <img src={% static 'athletic'|image_name %} id="my_img">
                                     <pre>Is an athletic person.</pre>
                                     </div>
 
                                 {% endif %}
 
-                                {% if feature == 'divorced' and features|item_at:feature  %}
+                                {% if feature.divorced%}
                                     <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <img src={% static feature|image_name %} id="my_img">
+                                    <img src={% static 'divorced'|image_name %} id="my_img">
                                     <pre>Recently divorced.</pre>
                                     </div>
 
                                 {% endif %}
 
-                                {% if feature == 'outgoing' and features|item_at:feature  %}
+                                {% if feature.outgoing %}
                                     <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <img src={% static feature|image_name %} id="my_img">
+                                    <img src={% static 'outgoing'|image_name %} id="my_img">
                                     <pre>Is outgoing.</pre>
                                     </div>
 
                                 {% endif %}
 
-                                {% if feature == 'figurine_stuffs' and features|item_at:feature  %}
+                                {% if feature.figurine_stuffs %}
                                     <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <img src={% static feature|image_name %} id="my_img">
+                                    <img src={% static 'figurine_stuffs'|image_name %} id="my_img">
                                     <pre>Is into figurine stuffs.</pre>
                                     </div>
-
                                 {% endif %}
-
-                        {% endfor %}
 
                     </div>
                 </div>
@@ -136,46 +132,42 @@
         Determined the features based on following:
         <ol>
             <li>
-                Student - Transactions related to books such as Science, Mathematics, Biology
+                <b>Student</b> - Transactions related to books such as Science, Mathematics, Biology
             </li>
             <li>
-                Artist or into arts - Transactions related to art, paint, craft
+                <b>Artist or into arts</b> - Transactions related to art, paint, craft
             </li>
             <li>
-                Into music - Transactions related to Guitar, Music, Piano
+                <b>Into music</b> - Transactions related to Guitar, Music, Piano
             </li>
             <li>
-                Figurine stuffs - Transactions related to Figurines
+                <b>Figurine stuffs</b> - Transactions related to Figurines
             </li>
             <li>
-                Recently moved - Transactions related to Depot, Furniture, Movers
+                <b>Recently moved</b> - Transactions related to Depot, Furniture, Movers
             </li>
             <li>
-                Likes peace - Transactions related to Library, Book Store, Museum
+                <b>Likes peace</b> - Transactions related to Library, Book Store, Museum
             </li>
             <li>
-                Proposing - Transactions related to Wedding Planners, Jewelry shopping
+                <b>Proposing</b> - Transactions related to Wedding Planners, Jewelry shopping
             </li>
             <li>
-                Athletic - Transactions related to Dick's Sports, Sports, NFl, NBA, Athletic events, Vitamin shopping, Biking, Gym
+                <b>Athletic</b> - Transactions related to Dick's Sports, Sports, NFl, NBA, Athletic events, Vitamin shopping, Biking, Gym
             </li>
             <li>
-                Divorced - Transactions related to Divorced Lawyer Fees
+                <b>Divorced</b> - Transactions related to Divorced Lawyer Fees
             </li><li>
-                Outgoing - Transactions related to Bar, Beach, Bowling, Skating, Theater, Concert, Wine
+                <b>Outgoing</b> - Transactions related to Bar, Beach, Bowling, Skating, Theater, Concert, Wine
             </li>
             <li>
-                Has Kids - Transactions related to babies
+                <b>Has Kids</b> - Transactions related to babies
             </li>
             <li>
-                Paying Student Loans - Transactions related to Student Loans
+                <b>Paying Student Loans</b> - Transactions related to Student Loans
             </li><li>
-                Pets - Transactions related to pet supplies
+                <b>Pets</b> - Transactions related to pet supplies
             </li>
-
-
-
-
 
         </ol>
         </p>

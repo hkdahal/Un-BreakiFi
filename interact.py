@@ -15,7 +15,8 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "UnBreakiFi.settings")
 if 'setup' in dir(django):
     django.setup()
 
-from SystemApp.models import Individual, Vendor, Transaction
+from SystemApp.models import Individual, Vendor, Transaction, Features
+import SystemApp.manual_features as F
 
 
 def parse():
@@ -42,6 +43,25 @@ def save_to_db(file_lst, uploaded=False):
         print_progress_bar(i, l, prefix='Progress:', suffix='Complete',
                            length=50)
     return users
+
+
+def update_features(user):
+    if user:
+        feature = Features(user=user)
+        feature.student = F.is_student(user.auth_id)
+        feature.has_kids = F.has_kids(user.auth_id)
+        feature.student_loan = F.has_been_paying_student_loans(user.auth_id)
+        feature.pets = F.has_pets(user.auth_id)
+        feature.an_artist = F.is_an_artist(user.auth_id)
+        feature.moved = F.is_moving(user.auth_id)
+        feature.peaceful = F.likes_peace(user.auth_id)
+        feature.proposing = F.is_proposing(user.auth_id)
+        feature.athletic = F.is_athletic(user.auth_id)
+        feature.divorced = F.is_divorced(user.auth_id)
+        feature.outgoing = F.is_outgoing(user.auth_id)
+        feature.figurine_stuffs = F.is_into_stuffs(user.auth_id)
+        feature.student = F.is_student(user.auth_id)
+        feature.save()
 
 
 def read_and_save(reader):
@@ -74,6 +94,7 @@ def read_and_save(reader):
             Transaction.objects.create(
                 user=user, date=the_date, amount=float(amount),
                 location=location, name=transaction_name, vendor=the_vendor)
+    update_features(user=user)
     return user.auth_id
 
 

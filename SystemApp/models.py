@@ -30,3 +30,24 @@ class Transaction(models.Model):
 
     def __str__(self):
         return self.name + ' ' + str(self.date) + ' ' + str(self.amount)
+
+
+class Features(models.Model):
+    user = models.ForeignKey(Individual, on_delete=models.CASCADE)
+    student = models.BooleanField(default=False)
+    has_kids = models.BooleanField(default=False)
+    student_loan = models.IntegerField(default=0)
+    pets = models.BooleanField(default=False)
+    an_artist = models.BooleanField(default=False)
+    proposing = models.BooleanField(default=False)
+    athletic = models.BooleanField(default=False)
+    divorced = models.BooleanField(default=False)
+    outgoing = models.BooleanField(default=False)
+    figurine_stuffs = models.BooleanField(default=False)
+    peaceful = models.BooleanField(default=False)
+    moved = models.BooleanField(default=False)
+    into_music = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ('user',)
+
